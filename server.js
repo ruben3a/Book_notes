@@ -38,4 +38,8 @@ app.get("/newBook", (req, res) => {
   res.render("new.ejs");
 });
 
+app.post("/newBook", async (req, res) => {
+  console.log(req.body);
+});
+
 app.listen(port);
