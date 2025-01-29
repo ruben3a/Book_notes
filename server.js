@@ -4,7 +4,17 @@ import axios from "axios";
 import bodyParser from "body-parser";
 
 const app = express();
-const db = new pg.Client({});
+
+const db = new pg.Client({
+  host: "localhost",
+  database: "bookNotes",
+  password: "023702",
+  user: "postgres",
+  port: 5432,
+});
+
+//db.connect();
+
 const API = "https://covers.openlibrary.org/b/isbn/$value-M.jpg";
 const port = 3000;
 
@@ -14,14 +24,18 @@ app.use(express.static("public"));
 app.get("/", async (req, res) => {
   try {
     const result = await axios.get(
-      "https://covers.openlibrary.org/b/isbn/OL1317211W-M.jpg"
+      "https://covers.openlibrary.org/b/OLID/OL8020853M-M.jpg"
     );
     const img = "https://covers.openlibrary.org/b/OLID/OL8020853M-M.jpg";
-    console.log(result.data);
+    console.log(result);
     res.render("main.ejs", { bookCover: img });
   } catch (error) {
     console.log(error);
   }
+});
+
+app.get("/newBook", (req, res) => {
+  res.render("new.ejs");
 });
 
 app.listen(port);
